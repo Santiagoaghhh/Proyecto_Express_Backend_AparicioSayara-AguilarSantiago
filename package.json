@@ -1,11 +1,12 @@
 {
   "name": "proyecto_express_backend_apariciosayara-aguilarsantiago",
   "version": "1.0.0",
-  "description": "",
+  "description": "´´´ npm init -y npm install express dotenv mongodb express-rate-limit cors bcrypt jsonwebtoken ´´´",
   "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,12 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-rate-limit": "^8.1.0",
+    "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.20.0"
+    "mongodb": "^6.20.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "semver": "^7.7.2",
+    "swagger-ui-express": "^5.0.1"
   }
 }

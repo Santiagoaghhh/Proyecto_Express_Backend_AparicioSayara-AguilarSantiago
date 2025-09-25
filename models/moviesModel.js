@@ -4,9 +4,8 @@ export class Movie {
       this.descripcion = descripcion;
       this.categoria = categoria; 
       this.anio = anio;
-      this.imagen = imagen || null;
+      this.imagen = imagen;
       this.aprobada = aprobada; 
       this.createdAt = new Date();
     }
   }
-  

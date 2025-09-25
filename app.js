@@ -1,33 +1,35 @@
 // src/app.js
+import dotenv from "dotenv";
 import express from "express";
-import rateLimit from "express-rate-limit";
 import cors from "cors";
-import authRoutes from "./routes/loginRoutes.js"; // Importa tus rutas
+import rateLimit from "express-rate-limit";
 
-const app = express();
+import { connectDB } from "./config/db.js";
+import userRoutes from "./routes/userRoutes.js";
+dotenv.config()
 
-// Configuración de middlewares
-app.use(express.json()); // Para procesar JSON en el cuerpo de las peticiones
-app.use(express.urlencoded({ extended: true })); // Para procesar datos de formularios
-
-// Middleware para limitar las peticiones
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, 
-    max: 100, 
-    message: "Demasiadas peticiones desde esta IP, por favor intentalo de nuevo despues de 15 minutos"
-});
-app.use(limiter);
-
-// Configuración de CORS
+// Middlewares globales
+app.use(express.json());
+app.use(cors());
 app.use(
-    cors({
-        origin: '*', 
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization']
+    rateLimit({
+        windowMs: 15 * 60 * 1000, // 15 min
+        max: 100,
+        message: "Demasiadas peticiones, intenta más tarde",
     })
 );
 
-// Registrar rutas
-app.use("/api/auth", authRoutes); // Usa un prefijo para tus rutas, por ejemplo /api/auth
+// Pruebita
+app.get("/", (req, res) => {
+    res.json({ msg: "🚀 Bienvenido a la API de KarenFlix" });
+});
+
+// Conectar a Mongo
+connectDB();
+// API
+app.use("/api/v1/users", userRoutes);
 
 export default app;
+
+
+
