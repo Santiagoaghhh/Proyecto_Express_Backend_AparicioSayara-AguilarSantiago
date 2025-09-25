@@ -1,10 +1,9 @@
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-
 dotenv.config();
 
+// Variables de entorno
 const uri = process.env.MONGO_URI;
-const PORT = process.env.PORT;
 let client;
 let db;
 

@@ -9,15 +9,14 @@ export async function register(req, res) {
     const { nombre, apellido, email, password } = req.body;
     const db = getDB();
     const usersCollection = db.collection("usuarios");
-
-    // Verificar si ya existe
+    // Verificar si el usuario ya existe con el email.
     const existe = await usersCollection.findOne({ email });
     if (existe) return res.status(400).json({ error: "Usuario ya registrado" });
 
-    // Encriptar contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hashear la contraseña
+    const hashedPassword = await bcrypt.hash(password, 8);
 
-    // Crear usuario (ya sin "telefono")
+    // Crear nuevo usuario
     const newUser = new User({
       nombre,
       apellido,
@@ -27,7 +26,9 @@ export async function register(req, res) {
 
     await usersCollection.insertOne(newUser);
 
-    res.status(201).json({ message: "Usuario registrado con éxito" });
+    res.status(201).json({
+    message: "Usuario registrado con éxito",
+    user: { id: result.insertedId, nombre, apellido, email }});
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error en el servidor" });
@@ -53,7 +54,7 @@ export async function login(req, res) {
       { id: user._id, rol: user.rol },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
-    );
+    ); 
 
     res.json({ message: "Login exitoso", token });
   } catch (err) {
