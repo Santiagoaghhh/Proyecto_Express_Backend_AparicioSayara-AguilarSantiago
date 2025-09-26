@@ -119,7 +119,7 @@ Desarrollar un backend seguro, modular y escalable que brinde los servicios nece
 ## Estructura del Proyecto  
 
 ```bash
-KarenFlix-Backend/
+Proyecto_Express_Backend_AparicioSayara-AguilarSantiago/
 ├── src/
 │   ├── config/          # Configuración de la app (DB, JWT, etc.)
 │   ├── controllers/     # Lógica de negocio
@@ -143,8 +143,8 @@ KarenFlix-Backend/
 ### 1. Clonar el repositorio  
 
 ```bash
-git clone <url-repositorio-backend>
-cd KarenFlix-Backend
+git clone <https://github.com/Santiagoaghhh/Proyecto_Express_Backend_AparicioSayara-AguilarSantiago>
+cd Proyecto_Express_Backend_AparicioSayara-AguilarSantiago
 ```
 
 ### 2. Instalar dependencias  
@@ -159,8 +159,8 @@ Crear un archivo `.env` con:
 
 ```env
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/karenflix
-JWT_SECRET=claveSecretaSuperSegura
+MONGODB_URI=mongodb+srv://santaguilar17:<db_password>@cluster0.ecvalby.mongodb.net/
+JWT_SECRET=""
 ```
 
 ### 4. Ejecutar la aplicación  
