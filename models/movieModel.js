@@ -1,8 +1,6 @@
 // src/models/movieModel.js
 import { getDB } from "../config/db.js";
-
 const COLLECTION = "peliculas";
-
 export async function createMovie(movieData) {
   const db = getDB();
   const nuevaPelicula = {
