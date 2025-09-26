@@ -2,7 +2,7 @@
 ## Instalación previa de dependencias.
 ´´´
 npm init -y
-npm install express dotenv mongodb express-rate-limit cors bcrypt jsonwebtoken
+npm install express dotenv mongodb express-rate-limit cors bcryptjs jsonwebtoken
 ´´´ 
 
 ### Consejo: 

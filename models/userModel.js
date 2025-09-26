@@ -1,6 +1,6 @@
 // src/models/userModel.js
-const { getDB } = require("../config/db");
-const bcrypt = require("bcrypt");
+import {getDB } from "../config/db.js";
+import bcrypt from "bcryptjs";
 
 const COLLECTION = "usuarios";
 
@@ -24,4 +24,4 @@ async function findUserByEmail(email) {
   return await db.collection(COLLECTION).findOne({ correo: email });
 }
 
-module.exports = { createUser, findUserByEmail };
+export { createUser, findUserByEmail };

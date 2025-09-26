@@ -1,5 +1,5 @@
 // src/config/db.js
-import {MongoClient} from ('mongodb')
+import {MongoClient} from 'mongodb';
 let client;
 let db;
 
