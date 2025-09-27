@@ -1,6 +1,6 @@
 // src/models/reviewModel.js
 import { getDB } from "../config/db.js";
-const COLLECTION = "reseñas";
+const COLLECTION = "resennas";
 
 export async function createReview(data) {
   const db = getDB();

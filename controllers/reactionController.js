@@ -47,7 +47,7 @@ export async function reactToReview(req, res) {
 
     // Si no existe → crear nueva
     await addReaction({
-      idReseña: id,
+      idResenna: id,
       idUsuario,
       tipo,
       fecha: new Date()

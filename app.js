@@ -7,6 +7,8 @@ import movieRoutes from "./routes/movieRoutes.js";
 import genreRoutes from "./routes/genreRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import reactionRoutes from "./routes/reactionRoutes.js";
+import rankingRoutes from "./routes/rankingRoutes.js";
+import popularityRoutes from "./routes/popularityRoutes.js";
 
 const app = express();
 
@@ -28,6 +30,9 @@ app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/genres", genreRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/reactions", reactionRoutes);
+app.use("/api/v1/ranking", rankingRoutes);
+app.use("/api/v1/popular", popularityRoutes);
+
 
 // Manejo de errores 
 app.use((req, res) => {

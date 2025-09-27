@@ -42,13 +42,34 @@ export async function addMovie(req, res) {
   }
 }
 
-// Listar películas (con $lookup y filtro opcional por categoría)
+const escapeRegex = (str = "") =>
+  str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); 
+
 export async function listMovies(req, res) {
   try {
     const db = getDB();
-    const { categoria } = req.query;
+    const { categoria, titulo } = req.query;
 
-    const pipeline = [
+    const match = {};
+
+    // Filtro por categoría (si llega)
+    if (categoria && ObjectId.isValid(categoria)) {
+      match.idCategoria = new ObjectId(categoria);
+    }
+
+    // Filtro por título (si llega) — búsqueda parcial e insensible a mayúsculas
+    if (titulo && titulo.trim() !== "") {
+      match.titulo = { $regex: new RegExp(escapeRegex(titulo.trim()), "i") };
+    }
+
+    const pipeline = [];
+
+    if (Object.keys(match).length > 0) {
+      pipeline.push({ $match: match });
+    }
+
+    // Enriquecer con categoría (si la necesitas visible)
+    pipeline.push(
       {
         $lookup: {
           from: "categorias",
@@ -57,15 +78,8 @@ export async function listMovies(req, res) {
           as: "categoria",
         },
       },
-      { $unwind: "$categoria" }, // convierte array en objeto
-    ];
-
-    // Filtrar por categoría si se pasa en query
-    if (categoria) {
-      pipeline.unshift({
-        $match: { idCategoria: new ObjectId(categoria) },
-      });
-    }
+      { $unwind: { path: "$categoria", preserveNullAndEmptyArrays: true } }
+    );
 
     const movies = await db.collection("peliculas").aggregate(pipeline).toArray();
     res.json(movies);
