@@ -5,6 +5,7 @@ import rateLimit from "express-rate-limit";
 import userRoutes from "./routes/userRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import genreRoutes from "./routes/genreRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 const app = express();
 
@@ -24,5 +25,11 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/genres", genreRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
+
+// Manejo de errores 
+app.use((req, res) => {
+  res.status(404).json({ msg: "Ruta no encontrada" });
+});
 
 export default app;
