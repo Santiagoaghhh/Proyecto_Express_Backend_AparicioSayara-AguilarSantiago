@@ -48,27 +48,19 @@ const escapeRegex = (str = "") =>
 export async function listMovies(req, res) {
   try {
     const db = getDB();
-    const { categoria, titulo } = req.query;
+    const { categoria, titulo, sort } = req.query;
 
     const match = {};
-
-    // Filtro por categoría (si llega)
     if (categoria && ObjectId.isValid(categoria)) {
       match.idCategoria = new ObjectId(categoria);
     }
-
-    // Filtro por título (si llega) — búsqueda parcial e insensible a mayúsculas
     if (titulo && titulo.trim() !== "") {
       match.titulo = { $regex: new RegExp(escapeRegex(titulo.trim()), "i") };
     }
 
     const pipeline = [];
+    if (Object.keys(match).length > 0) pipeline.push({ $match: match });
 
-    if (Object.keys(match).length > 0) {
-      pipeline.push({ $match: match });
-    }
-
-    // Enriquecer con categoría (si la necesitas visible)
     pipeline.push(
       {
         $lookup: {
@@ -81,13 +73,17 @@ export async function listMovies(req, res) {
       { $unwind: { path: "$categoria", preserveNullAndEmptyArrays: true } }
     );
 
+    // 👇 ordenar según query param
+    if (sort === "creadaEn") {
+      pipeline.push({ $sort: { creadaEn: -1 } });
+    }
+
     const movies = await db.collection("peliculas").aggregate(pipeline).toArray();
     res.json(movies);
   } catch (error) {
-    res.status(500).json({ msg: "Error al obtener películas", error: error.message });
+    res.status(500).json({ msg: "❌ Error al obtener películas", error: error.message });
   }
 }
-
 // Obtener película por ID
 export async function getMovie(req, res) {
   try {
