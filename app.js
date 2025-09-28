@@ -9,6 +9,7 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 import reactionRoutes from "./routes/reactionRoutes.js";
 import rankingRoutes from "./routes/rankingRoutes.js";
 import popularityRoutes from "./routes/popularityRoutes.js";
+import { swaggerDocs } from "./swagger.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/v1/reactions", reactionRoutes);
 app.use("/api/v1/ranking", rankingRoutes);
 app.use("/api/v1/popular", popularityRoutes);
 
+swaggerDocs(app);
 
 // Manejo de errores 
 app.use((req, res) => {

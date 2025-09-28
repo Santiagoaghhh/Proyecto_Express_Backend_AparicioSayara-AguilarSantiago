@@ -1,7 +1,6 @@
-// src/services/popularityService.js
 import { getDB } from "../config/db.js";
 
-export async function calcularPeliculasPopulares() {
+export async function calcularPeliculasPopulares(limit = 10) {
   const db = getDB();
 
   const pipeline = [
@@ -13,17 +12,12 @@ export async function calcularPeliculasPopulares() {
         as: "reseñas"
       }
     },
-    {
-      $unwind: {
-        path: "$reseñas",
-        preserveNullAndEmptyArrays: true
-      }
-    },
+    { $unwind: { path: "$reseñas", preserveNullAndEmptyArrays: true } },
     {
       $lookup: {
         from: "reacciones",
-        localField: "reseñas._id",
-        foreignField: "idReseña",
+        localField: "resennas._id",
+        foreignField: "idResenna",
         as: "reacciones"
       }
     },
@@ -46,19 +40,14 @@ export async function calcularPeliculasPopulares() {
         _id: "$_id",
         titulo: { $first: "$titulo" },
         anno: { $first: "$anno" },
-        categoria: { $first: "$categoria" },
+        categoria: { $first: "$idCategoria" },
         totalLikes: { $sum: "$likes" },
         totalDislikes: { $sum: "$dislikes" }
       }
     },
-    {
-      $addFields: {
-        popularidad: { $subtract: ["$totalLikes", "$totalDislikes"] }
-      }
-    },
-    {
-      $sort: { popularidad: -1 }
-    }
+    { $addFields: { popularidad: { $subtract: ["$totalLikes", "$totalDislikes"] } } },
+    { $sort: { popularidad: -1 } },
+    { $limit: limit } // 👈 Aquí limitamos (por defecto 10)
   ];
 
   return await db.collection("peliculas").aggregate(pipeline).toArray();
