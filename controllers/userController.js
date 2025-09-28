@@ -5,14 +5,15 @@ import bcrypt from "bcryptjs";
 
 async function registerUser(req, res) {
   try {
-    const { nombre, correo, password, rol } = req.body;
+    // aceptar ambos: español e inglés
+    const nombre = req.body.nombre || req.body.name;
+    const correo = req.body.correo || req.body.email;
+    const { password, rol } = req.body;
 
-    // Validar campos
     if (!nombre || !correo || !password) {
       return res.status(400).json({ msg: "Todos los campos son obligatorios" });
     }
 
-    // Revisar si el correo ya existe
     const existingUser = await findUserByEmail(correo);
     if (existingUser) {
       return res.status(400).json({ msg: "El correo ya está registrado" });
@@ -24,6 +25,7 @@ async function registerUser(req, res) {
     res.status(500).json({ msg: "❌ Error en el registro", error: error.message });
   }
 }
+
 
 async function loginUser(req, res) {
   try {
