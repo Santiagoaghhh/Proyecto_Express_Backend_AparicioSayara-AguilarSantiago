@@ -16,7 +16,7 @@ export async function calcularPeliculasPopulares(limit = 10) {
     {
       $lookup: {
         from: "reacciones",
-        localField: "resennas._id",
+        localField: "reseñas._id",
         foreignField: "idResenna",
         as: "reacciones"
       }
@@ -41,13 +41,15 @@ export async function calcularPeliculasPopulares(limit = 10) {
         titulo: { $first: "$titulo" },
         anno: { $first: "$anno" },
         categoria: { $first: "$idCategoria" },
+        imagen: { $first: "$imagen" },        // ✅ Incluimos la imagen
+        descripcion: { $first: "$descripcion" }, // ✅ Y la descripción
         totalLikes: { $sum: "$likes" },
         totalDislikes: { $sum: "$dislikes" }
       }
     },
     { $addFields: { popularidad: { $subtract: ["$totalLikes", "$totalDislikes"] } } },
     { $sort: { popularidad: -1 } },
-    { $limit: limit } // 👈 Aquí limitamos (por defecto 10)
+    { $limit: limit }
   ];
 
   return await db.collection("peliculas").aggregate(pipeline).toArray();

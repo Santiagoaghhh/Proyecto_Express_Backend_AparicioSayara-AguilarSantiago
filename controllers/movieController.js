@@ -84,7 +84,7 @@ export async function listMovies(req, res) {
     const movies = await db.collection("peliculas").aggregate(pipeline).toArray();
     res.json(movies);
   } catch (error) {
-    res.status(500).json({ msg: "❌ Error al obtener películas", error: error.message });
+    res.status(500).json({ msg: "Error al obtener películas", error: error.message });
   }
 }
 
