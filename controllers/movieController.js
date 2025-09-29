@@ -171,9 +171,16 @@ export async function listMoviesByCategory(req, res) {
     const { idCategoria } = req.params;
     const db = getDB();
 
+    // Validar que el idCategoria sea un ObjectId válido
+    if (!ObjectId.isValid(idCategoria)) {
+      return res.status(400).json({ msg: "ID de categoría inválido" });
+    }
+
+    const categoriaId = new ObjectId(idCategoria);
+
     const movies = await db
       .collection("peliculas")
-      .find({ idCategoria })
+      .find({ idCategoria: categoriaId })
       .toArray();
 
     if (!movies.length) {
@@ -184,4 +191,5 @@ export async function listMoviesByCategory(req, res) {
   } catch (error) {
     console.error("❌ Error en listMoviesByCategory:", error);
     res.status(500).json({ msg: "Error al obtener películas por categoría" });
-  }}
+  }
+}
