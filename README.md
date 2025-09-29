@@ -87,17 +87,17 @@ Desarrollar un backend seguro, modular y escalable que brinde los servicios nece
 
 ##  Características Principales  
 
-- ✅ **Gestión de Usuarios** con roles (`usuario` y `admin`).  
-- ✅ **Autenticación JWT** con `passport-jwt` y `bcrypt`.  
-- ✅ **Gestión de Películas** (CRUD, aprobación por administradores).  
-- ✅ **Categorías** (mínimo 4, administradas por rol `admin`).  
-- ✅ **Reseñas** con calificación, comentarios y fecha.  
-- ✅ **Likes/Dislikes** en reseñas (no sobre reseñas propias).  
-- ✅ **Ranking ponderado** de películas.  
-- ✅ **Swagger** para documentar los endpoints.  
-- ✅ **Rate limiting y CORS** para seguridad.  
-- ✅ **Validaciones con express-validator**.  
-- ✅ **Operaciones transaccionales en MongoDB** para garantizar consistencia.  
+- **Gestión de Usuarios** con roles (`usuario` y `admin`).  
+- **Autenticación JWT** con `passport-jwt` y `bcrypt`.  
+- **Gestión de Películas** (CRUD, aprobación por administradores).  
+- **Categorías** (mínimo 4, administradas por rol `admin`).  
+- **Reseñas** con calificación, comentarios y fecha.  
+- **Likes/Dislikes** en reseñas (no sobre reseñas propias).  
+- **Ranking ponderado** de películas.  
+- **Swagger** para documentar los endpoints.  
+- **Rate limiting y CORS** para seguridad.  
+- **Validaciones con express-validator**.  
+- **Operaciones transaccionales en MongoDB** para garantizar consistencia.  
 
 ---
 
