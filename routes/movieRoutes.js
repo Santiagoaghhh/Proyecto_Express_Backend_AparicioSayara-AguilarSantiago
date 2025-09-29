@@ -19,7 +19,7 @@ const router = express.Router();
  *   description: Endpoints para gestionar películas
  */
 
-/**
+/** 
  * @swagger
  * /movies:
  *   get:
@@ -41,6 +41,29 @@ const router = express.Router();
  *         description: Lista de películas obtenida con éxito
  */
 router.get("/", listMovies);
+
+/** 
+ * @swagger
+ * /movies:
+ *   get:
+ *     summary: Listar peliculas por categoría
+ *     tags: [Películas]
+ *     parameters:
+ *       - in: query
+ *         name: titulo
+ *         schema:
+ *           type: string
+ *         description: Buscar películas por categoría
+ *       - in: query
+ *         name: categoria
+ *         schema:
+ *           type: string
+ *         description: Filtrar por categoría (ObjectId)
+ *     responses:
+ *       200:
+ *         description: Lista de películas obtenida con éxito
+ */
+router.get("/category/:idCategoria", listMoviesByCategory);
 
 /**
  * @swagger

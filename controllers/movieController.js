@@ -164,3 +164,24 @@ export async function removeMovie(req, res) {
     res.status(500).json({ msg: "❌ Error al eliminar película", error: error.message });
   }
 }
+
+// Listar peliculas por categoria
+export async function listMoviesByCategory(req, res) {
+  try {
+    const { idCategoria } = req.params;
+    const db = getDB();
+
+    const movies = await db
+      .collection("peliculas")
+      .find({ idCategoria })
+      .toArray();
+
+    if (!movies.length) {
+      return res.status(404).json({ msg: "No hay películas en esta categoría" });
+    }
+
+    res.json(movies);
+  } catch (error) {
+    console.error("❌ Error en listMoviesByCategory:", error);
+    res.status(500).json({ msg: "Error al obtener películas por categoría" });
+  }}
