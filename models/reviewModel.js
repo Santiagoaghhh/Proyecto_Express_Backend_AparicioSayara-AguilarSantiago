@@ -7,9 +7,9 @@ export async function createReview(data) {
   return await db.collection(COLLECTION).insertOne(data);
 }
 
-export async function getReviewsByMovie(idPelicula) {
+export async function getReviewsByMovie(movieId) {
   const db = getDB();
-  return await db.collection(COLLECTION).find({ idPelicula: idPelicula }).toArray();
+  return await db.collection(COLLECTION).find({ idPelicula: movieId }).toArray();
 }
 
 export async function getReviewById(id) {
@@ -17,11 +17,11 @@ export async function getReviewById(id) {
   return await db.collection(COLLECTION).findOne({ _id: id });
 }
 
-export async function getUserReviewOnMovie(userId, idPelicula) {
+export async function getUserReviewOnMovie(userId, movieId) {
   const db = getDB();
   return await db.collection(COLLECTION).findOne({
     idUsuario: userId,
-    idPelicula: idPelicula,
+    idPelicula: movieId,
   });
 }
 
