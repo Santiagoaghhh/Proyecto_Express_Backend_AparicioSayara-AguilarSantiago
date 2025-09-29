@@ -2,7 +2,6 @@
 import {
     createGenre,
     getGenres,
-    getGenreById,
     updateGenre,
     deleteGenre,
   } from "../models/genreModel.js";

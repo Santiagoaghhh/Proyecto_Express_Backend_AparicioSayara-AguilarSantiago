@@ -1,7 +1,7 @@
 // src/models/genreModel.js
 import { getDB } from "../config/db.js";
 
-const COLLECTION = "generos";
+const COLLECTION = "categorias";
 
 export async function createGenre(data) {
   const db = getDB();

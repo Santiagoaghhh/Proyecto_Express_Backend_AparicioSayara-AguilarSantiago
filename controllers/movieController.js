@@ -5,7 +5,7 @@ import { getDB } from "../config/db.js";
 // Crear película
 export async function addMovie(req, res) {
   try {
-    const { titulo, descripcion, anno, imagen, estado, tipo, idCategoria } = req.body;
+    const { titulo, descripcion, anno, imagen, tipo, idCategoria } = req.body;
 
     if (!titulo || !descripcion || !anno || !idCategoria) {
       return res.status(400).json({ msg: "Faltan campos obligatorios" });
