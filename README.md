@@ -173,7 +173,25 @@ La API estará disponible en:
 👉 `http://localhost:3000/api/v1`  
 
 ---
+## SCRUM
 
+
+### Documento de Especificaciones Técnicas
+
+
+- Metodología: **SCRUM**  
+- Roles: Scrum Master, Product Owner, Developers  
+- Herramienta de seguimiento: GitHub Projects / Trello  
+- Se definieron **sprints**, **historias de usuario** y criterios de aceptación.  
+- Documento completo disponible en PDF en la carpeta `/SCRUM`.  
+
+
+Este proyecto incluye documentación completa con especificaciones técnicas, requerimientos funcionales y no funcionales, historias de usuario y metodología de desarrollo.
+
+**[Visualizar Documento Completo](./Proyecto_Express-SCRUM_AparicioSayara_AguilarSantiago.docx.pdf)**
+
+
+---
 
 ## Modelo Conceptual  
 
@@ -456,18 +474,19 @@ Relaciones:
 - **/api/v1/reviews** → Crear, editar, eliminar reseñas  
 - **/api/v1/likes** → Dar/Quitar like o dislike a reseñas  
 
-📌 Documentación completa en **Swagger**:  
-👉 `http://localhost:3000/api-docs`  
+ Documentación completa en **Swagger**:  
+ `http://localhost:3000/api-docs`  
+
+
 
 ---
 
-## Planeación del Proyecto (SCRUM)  
+# Desarrollado por
 
-- Metodología: **SCRUM**  
-- Roles: Scrum Master, Product Owner, Developers  
-- Herramienta de seguimiento: GitHub Projects / Trello  
-- Se definieron **sprints**, **historias de usuario** y criterios de aceptación.  
-- Documento completo disponible en PDF en la carpeta `/SCRUM`.  
+- Santiago Aguilar - [Linkedin](https://www.linkedin.com/in/santiago-aguilar-208b38348/) - [GitHub](https://github.com/Santiagoaghhh) 
+
+- Sayara Aparicio - [LinkedIn](https://www.linkedin.com/in/sayara-aparicio-38827b373/) - [GitHub](https://github.com/SayaraAparicio/)
+
 
 ---
 
