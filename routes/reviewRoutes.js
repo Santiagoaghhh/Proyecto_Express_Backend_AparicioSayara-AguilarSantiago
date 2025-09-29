@@ -55,7 +55,7 @@ const router = express.Router();
  *         description: Error de validación
  */
 router.post("/", authMiddleware, authorizeRoles("user"), validateReview, addReview);
-
+router.get("/", listReviews)
 /**
  * @swagger
  * /reviews/{movieId}:
