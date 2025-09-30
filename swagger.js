@@ -13,7 +13,7 @@ const swaggerOptions = {
       description: "Documentación de la API KarenFlix"
     },
     servers: [
-      { url: "https://proyecto-express-backend-aparicio-s.vercel.app" }
+      { url: "https://proyecto-express-backend-aparicio-s.vercel.app/" }
     ],
   },
   apis: ["./routes/*.js"], 
