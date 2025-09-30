@@ -5,6 +5,7 @@ import {
   getMovie,
   editMovie,
   removeMovie,
+  listMoviesByCategory, // 👈 faltaba importar
 } from "../controllers/movieController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import authorizeRoles from "../middleware/roleMiddleware.js";
@@ -44,24 +45,22 @@ router.get("/", listMovies);
 
 /** 
  * @swagger
- * /movies:
+ * /movies/category/{idCategoria}:
  *   get:
- *     summary: Listar peliculas por categoría
+ *     summary: Listar películas por categoría
  *     tags: [Películas]
  *     parameters:
- *       - in: query
- *         name: titulo
+ *       - in: path
+ *         name: idCategoria
+ *         required: true
  *         schema:
  *           type: string
- *         description: Buscar películas por categoría
- *       - in: query
- *         name: categoria
- *         schema:
- *           type: string
- *         description: Filtrar por categoría (ObjectId)
+ *         description: ID de la categoría (ObjectId)
  *     responses:
  *       200:
  *         description: Lista de películas obtenida con éxito
+ *       404:
+ *         description: No se encontraron películas en esta categoría
  */
 router.get("/category/:idCategoria", listMoviesByCategory);
 
