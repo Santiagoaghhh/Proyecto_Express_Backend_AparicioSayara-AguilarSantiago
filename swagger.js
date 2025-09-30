@@ -1,33 +1,26 @@
-import express from "express";
+// src/swagger.js
+import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import swaggerJsdoc from "swagger-jsdoc";
 
-const app = express();
-
-const swaggerOptions = {
+const options = {
   definition: {
     openapi: "3.0.0",
     info: {
       title: "KarenFlix API",
       version: "1.0.0",
-      description: "Documentación de la API KarenFlix"
+      description: "Documentación de la API de KarenFlix con Swagger",
     },
     servers: [
-      { url: "https://proyecto-express-backend-aparicio-s.vercel.app/" }
+      {
+        url: "https://proyecto-express-backend-aparicio-s.vercel.app/api/v1",
+      },
     ],
   },
-  apis: ["./routes/*.js"], 
+  apis: ["./routes/*.js"],
 };
 
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
+const swaggerSpec = swaggerJSDoc(options);
 
-// 👇 endpoint que devuelve el JSON de la doc
-app.get("/swagger.json", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.send(swaggerSpec);
-});
-
-// 👇 monta SwaggerUI y dile que use ese JSON
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-export default app;
+export function swaggerDocs(app) {
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
