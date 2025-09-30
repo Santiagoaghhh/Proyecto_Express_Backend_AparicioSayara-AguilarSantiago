@@ -16,7 +16,7 @@ const swaggerOptions = {
       { url: "https://proyecto-express-backend-aparicio-s.vercel.app" }
     ],
   },
-  apis: ["./src/routes/*.js"], // ajusta según tu estructura
+  apis: ["./routes/*.js"], 
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
