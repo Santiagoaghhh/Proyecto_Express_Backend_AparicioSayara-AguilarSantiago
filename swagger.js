@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:4000/api/v1",
+        url: "https://proyecto-express-backend-aparicio-s.vercel.app/",
       },
     ],
   },
