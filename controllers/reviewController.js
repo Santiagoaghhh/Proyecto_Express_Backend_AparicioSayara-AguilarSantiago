@@ -38,7 +38,7 @@ export async function addReview(req, res) {
     }
 
     // Crear reseña
-    const result = await db.collection("reseñas").insertOne({
+    const result = await db.collection("resennas").insertOne({
       idUsuario: new ObjectId(idUsuario),
       idPelicula: new ObjectId(idPelicula),
       titulo,
