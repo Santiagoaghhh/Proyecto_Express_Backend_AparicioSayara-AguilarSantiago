@@ -30,9 +30,11 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.20.0",
+    "node.js": "^0.0.1-security",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "semver": "^7.7.2",
+    "start": "^5.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }
