@@ -5,7 +5,8 @@ import {
   getMovie,
   editMovie,
   removeMovie,
-  listMoviesByCategory, // 👈 faltaba importar
+  listMoviesByCategory,
+  listMoviesByYear, // 👈 faltaba importar
 } from "../controllers/movieController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import authorizeRoles from "../middleware/roleMiddleware.js";
@@ -64,6 +65,27 @@ router.get("/", listMovies);
  */
 router.get("/category/:idCategoria", listMoviesByCategory);
 
+/** 
+ * @swagger
+ * /movies/category/{idCategoria}:
+ *   get:
+ *     summary: Listar películas por categoría
+ *     tags: [Películas]
+ *     parameters:
+ *       - in: path
+ *         name: idCategoria
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID de la categoría (ObjectId)
+ *     responses:
+ *       200:
+ *         description: Lista de películas obtenida con éxito
+ *       404:
+ *         description: No se encontraron películas en esta categoría
+ */
+
+router.get("/year/:anno", listMoviesByYear);
 /**
  * @swagger
  * /movies/{id}:

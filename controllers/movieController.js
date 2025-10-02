@@ -171,7 +171,6 @@ export async function listMoviesByCategory(req, res) {
     const { idCategoria } = req.params;
     const db = getDB();
 
-    // Validar que el idCategoria sea un ObjectId válido
     if (!ObjectId.isValid(idCategoria)) {
       return res.status(400).json({ msg: "ID de categoría inválido" });
     }
@@ -189,7 +188,32 @@ export async function listMoviesByCategory(req, res) {
 
     res.json(movies);
   } catch (error) {
-    console.error("❌ Error en listMoviesByCategory:", error);
+    console.error("Error en listMoviesByCategory:", error);
     res.status(500).json({ msg: "Error al obtener películas por categoría" });
+  }
+}
+
+// Listar películas por año de estreno
+export async function listMoviesByYear(req, res){
+  try{
+    const {anno} = req.params;
+    const db = getDB;
+
+    if (!String.isValid(anno)){
+      return res.status(400).json({msg: "Año inválido"});
+    }
+    const year = parseInt(anno);
+
+    const movies = await db
+    .collection("peliculas")
+    .find({ anno:year });
+    
+    if (!movies.lenght){
+      return res.status(404).json({msg: "No hay películas para este año."})
+    }
+    res.json(movies);
+  }
+  catch(error){
+    console.error("Error en listMoviesByYear");
   }
 }
