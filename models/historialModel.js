@@ -1,30 +1,51 @@
+// src/models/historialModel.js
 import { getDB } from "../config/db.js";
-const mongodb = require('mongodb');
 
 const COLLECTION = "historial";
 
-const historialSchema = new mongodb.Schema({
-  userId: {
-    type: mongodb.Schema.Types.ObjectId,
-    ref: 'idUsuario',
-    required: true
-  },
-  tipoAccion: { 
-    type: String,
-    enum: ['registro', 'edicion', 'eliminacion'],
-    required: true
-  },
-  descripcion: { 
-    type: String,
-    required: true 
-  },
-  fecha: {
-    type: Date,
-    default: Date.now
+/**
+ * Registrar una acción en el historial de un usuario
+ * @param {string|ObjectId} usuarioId - ID del usuario
+ * @param {string} tipoAccion - Tipo de acción: "registro", "editar", "eliminar"
+ * @param {string} descripcion - Descripción de la acción
+ */
+export async function registrarAccion(usuarioId, tipoAccion, descripcion) {
+  try {
+    const db = getDB();
+    const historial = {
+      usuarioId,
+      tipoAccion,
+      descripcion,
+      fecha: new Date(),
+    };
+    await db.collection(COLLECTION).insertOne(historial);
+  } catch (error) {
+    console.error("❌ Error al registrar historial:", error.message);
   }
-});
+}
 
-const db = getDB();
+/**
+ * Obtener historial de un usuario con filtros
+ * @param {string|ObjectId} usuarioId - ID del usuario
+ * @param {object} filtros - { tipoAccion, desde, hasta }
+ * @returns {Promise<Array>} Lista de acciones ordenadas por fecha
+ */
+export async function obtenerHistorial(usuarioId, filtros = {}) {
+  const db = getDB();
+  const query = { usuarioId };
 
-const Historial = mongodb.model('Historial', historialSchema);
-module.exports = Historial;
+  if (filtros.tipoAccion) {
+    query.tipoAccion = filtros.tipoAccion;
+  }
+
+  if (filtros.desde || filtros.hasta) {
+    query.fecha = {};
+    if (filtros.desde) query.fecha.$gte = new Date(filtros.desde);
+    if (filtros.hasta) query.fecha.$lte = new Date(filtros.hasta);
+  }
+
+  return db.collection(COLLECTION)
+           .find(query)
+           .sort({ fecha: -1 })
+           .toArray();
+}

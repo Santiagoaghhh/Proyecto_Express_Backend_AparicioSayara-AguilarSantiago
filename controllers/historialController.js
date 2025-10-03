@@ -1,86 +1,18 @@
-// src/controllers/historislController.js
-import { ObjectId } from "mongodb";
-import { getDB } from "../config/db.js";
+import { obtenerHistorial } from "../models/historialModel.js";
 
-const db = getDB();
+export async function getHistorial(req, res) {
+  try {
+    const { tipoAccion, desde, hasta } = req.query;
 
-// registro de reseñas
-export async function listReviews(req, res) {
-    try {
-      const { movieId } = req.params;
-      if (!ObjectId.isValid(movieId)) {
-        return res.status(400).json({ msg: "ID de película inválido" });
-      }
-  
-      const reviews = await getReviewsByMovie(new ObjectId(movieId));
-      res.json(reviews);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ msg: "❌ Error al obtener reseñas", error: error.message });
-    }
-  }
+    const historial = await obtenerHistorial(req.user.id, {
+      tipoAccion,
+      desde,
+      hasta,
+    });
 
-  // editarlas
-  export async function editReview(req, res) {
-    try {
-      const { id } = req.params;
-      const userId = req.user.id;
-      const updateData = req.body;
-  
-      if (!ObjectId.isValid(id)) {
-        return res.status(400).json({ msg: "ID de reseña inválido" });
-      }
-  
-      const review = await getReviewById(new ObjectId(id));
-      if (!review) {
-        return res.status(404).json({ msg: "Reseña no encontrada" });
-      }
-  
-      if (review.idUsuario.toString() !== userId) {
-        return res
-          .status(403)
-          .json({ msg: "No puedes editar reseñas de otros usuarios" });
-      }
-  
-      updateData.actualizadaEn = new Date();
-      await updateReview(new ObjectId(id), updateData);
-  
-      res.json({ msg: "✅ Reseña actualizada" });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ msg: "❌ Error al editar reseña", error: error.message });
-    }
+    res.status(200).json(historial);
+  } catch (error) {
+    console.error("Error al obtener historial:", error);
+    res.status(500).json({ message: "Error al obtener historial" });
   }
-  
-  // eliminarlas
-  export async function removeReview(req, res) {
-    try {
-      const { id } = req.params;
-      const userId = req.user.id;
-  
-      if (!ObjectId.isValid(id)) {
-        return res.status(400).json({ msg: "ID de reseña inválido" });
-      }
-  
-      const review = await getReviewById(new ObjectId(id));
-      if (!review) {
-        return res.status(404).json({ msg: "Reseña no encontrada" });
-      }
-  
-      if (review.idUsuario.toString() !== userId) {
-        return res
-          .status(403)
-          .json({ msg: "No puedes eliminar reseñas de otros usuarios" });
-      }
-  
-      await deleteReview(new ObjectId(id));
-      res.json({ msg: "✅ Reseña eliminada" });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ msg: "❌ Error al eliminar reseña", error: error.message });
-    }
-  }
-  
+}
